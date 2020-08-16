@@ -36,3 +36,15 @@ const personSchema = new Schema({
 
 // create a model from this schema
 const Person = mongoose.model('Person', personSchema)
+
+
+/*=========================
+    CRUD - Create
+=========================*/
+const createAndSavePerson = done => {
+    const jonDoe = new Person({name: "Jon Doe", age: 30, favFoods:["Fish", "Wine"]})
+    jonDoe.save((err, data) => {
+        if ( err ) done(err);
+        done(null, data)
+    })
+}
