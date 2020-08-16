@@ -1,0 +1,18 @@
+doctype html
+html
+    include ./head.pug 
+    
+    body
+        form(action = "/person", methode = "POST")
+            label(for="name") Name:
+            input(type="text" id = "name" name="name") br
+
+            label(for="age") Age:
+            input(type="number" id="age" name="age") br
+
+            label(for="nationality") Nationality:
+            input(type="text" id="nationality" name="nationality") br
+
+            button(type="submit") Create new person 
+            
+    include ./footer.pug
