@@ -3,16 +3,19 @@ html
     include ./head.pug 
     
     body
-        form(action = "/person", methode = "POST")
+        form(action = "/person", method = "POST")
             label(for="name") Name:
+            br
             input(type="text" id = "name" name="name")
             br
 
             label(for="age") Age:
+            br
             input(type="number" id="age" name="age")
             br
 
             label(for="nationality") Nationality:
+            br
             input(type="text" id="nationality" name="nationality")
             br
 
