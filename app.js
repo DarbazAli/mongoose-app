@@ -22,6 +22,11 @@ app.get('/about', (req, res) => {
     res.render('about')
 })
 
+// seup a rout for person
+app.get('/person', (req, res) => {
+    res.render('person');
+})
+
 // establish a connection to local mongodb database
 // mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true});
 const mongoUri = "mongodb://localhost:27017/test";
