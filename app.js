@@ -1,4 +1,6 @@
 const express = require('express')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const app = express();
 
@@ -19,3 +21,9 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about')
 })
+
+// establish a connection to local mongodb database
+// mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true});
+const mongoUri = "mongodb://localhost:27017/test";
+mongoose.connect(mongoUri, {useUnifiedTopology: true, useNewUrlParser: true});
+
