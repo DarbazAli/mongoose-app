@@ -27,3 +27,12 @@ app.get('/about', (req, res) => {
 const mongoUri = "mongodb://localhost:27017/test";
 mongoose.connect(mongoUri, {useUnifiedTopology: true, useNewUrlParser: true});
 
+// create a collection with Schema
+const personSchema = new Schema({
+    name: String,
+    age: Number,
+    favFoods: [String]
+})
+
+// create a model from this schema
+const Person = mongoose.model('Person', personSchema)
