@@ -85,6 +85,7 @@ app.post('/person', (req, res) => {
 
 app.get('/people', (req, res) => {
     Person.find( (err, response) => {
-        res.json(response);
+        // res.json(response);
+        res.render('people', {people: response})
     })
 })

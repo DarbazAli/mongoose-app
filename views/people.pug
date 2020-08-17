@@ -1,0 +1,9 @@
+doctype html
+html
+    include ./head.pug 
+
+    body
+        ul
+            for p in people
+                li= 'Name: ' + p.name + ', Age: ' + p.age
+                br
