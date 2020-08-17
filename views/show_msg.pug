@@ -1,0 +1,7 @@
+html
+    include ./head.pug 
+    body
+        if (type == "error")
+            h3(style = "color:red") #{message}
+        h2 #{message} 
+        p #{person.name}

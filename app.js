@@ -67,7 +67,8 @@ app.post('/person', (req, res) => {
 
     // check if all of the filds are provied
     if ( !person.name || !person.age || !person.nationality ) {
-        res.send("Sorry, you provided wrong info")
+        // res.send("Sorry, you provided wrong info")
+        res.render('show_msg', {message: "Sorry, you provided wrong data", type: "error"})
     } else {
         let newPerson = new Person({
             name: person.name,
@@ -76,8 +77,8 @@ app.post('/person', (req, res) => {
         })
 
         newPerson.save( (err, data) => {
-            if ( err ) res.send("Error occured")
-            else res.send("New person added")
+            if ( err ) res.render('show_msg', {message: 'Database Error', type: 'error'})
+            else res.render('show_msg', {message: 'New person added', person: data})
         })
     }
 })
