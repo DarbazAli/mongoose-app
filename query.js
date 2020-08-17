@@ -26,3 +26,30 @@ require('dotenv').config(); // to read environment variables from .env
 const mongo_uri = process.env.MONGO_URI_LOCAL;
 mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
+
+/*==========================================
+
+==============================================*/
+
+/*==========================================
+    2) Create Schema and Model
+
+    MongoDB uses Collection as a table
+    mongoose uses Schema to represetn a collection in the db
+
+    - Person Prototype -
+    --------------------
+    name:           String
+    age:            Number
+    nationality:    String
+
+    We Create a Schema based on Person Prototype
+==============================================*/
+const personSchema = new Schema({
+    name: String,
+    age: Number,
+    nationality: String
+});
+
+// We create a model based on this schema
+const Person = mongoose.model('Person', personSchema)
