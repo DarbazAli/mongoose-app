@@ -9,15 +9,15 @@ import { config } from 'dotenv'
 
 // custom modules
 import Person from './Schema.js'
-import homeRoute from './server/homeRoute.js'
-import userRoute from './server/userRoute.js'
+import homeRoute from './homeRoute.js'
+import userRoute from './userRoute.js'
 
 config()
 
 const app = express()
 const { MONGO_URI, PORT } = process.env
 
-app.listen(PORT, () => log('Listening on ' + PORT))
+app.listen(PORT, log(`Server running on port ${PORT}`))
 
 // setup template engine
 app.set('views', './views')
