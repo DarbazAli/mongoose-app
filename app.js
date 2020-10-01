@@ -5,8 +5,12 @@ const log = console.log
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import Person from './Schema.js'
 import { config } from 'dotenv'
+
+// custom modules
+import Person from './Schema.js'
+import homeRoute from './server/homeRoute.js'
+import userRoute from './server/userRoute.js'
 
 config()
 
@@ -35,22 +39,7 @@ mongoose
     })
     .then(log('Conected to database'))
 
-// create the home url
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Home', message: 'Hello There' })
-})
-
-app.route('/person').post((req, res) => {
-    const { name, age, fav_food } = req.body
-
-    const newPerson = new Person({
-        name: name,
-        age: age,
-        favFoods: fav_food,
-    })
-
-    newPerson
-        .save(newPerson)
-        .then((data) => res.json(data))
-        .catch((err) => log(err))
-})
+// home route
+homeRoute(app)
+// user route
+userRoute(Person, app)
