@@ -14,20 +14,6 @@
 // We need 2 main packages for this stack
 const mongoose = require('mongoose') // to enteract with database
 const Schema = mongoose.Schema // to create Schemas for database documents
-require('dotenv').config() // to read environment variables from .env
-
-/*==========================================
-    1) Install and Setup
-        1. install mongoose package
-        2. define mongodb uri in the .env file
-        3. connect to database with .connect()
-==============================================*/
-const mongo_uri = process.env.MONGO_URI_LOCAL
-mongoose.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
-
-/*==========================================
-
-==============================================*/
 
 /*==========================================
     2) Create Schema and Model
@@ -44,10 +30,18 @@ mongoose.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
     We Create a Schema based on Person Prototype
 ==============================================*/
 const personSchema = new Schema({
-    name: String,
-    age: Number,
-    nationality: String,
+    name: {
+        type: String,
+        required: true,
+        lowercase: false,
+    },
+
+    age: {
+        type: Number,
+        default: 25,
+    },
+
+    favFoods: [String],
 })
 
-// We create a model based on this schema
-const Person = mongoose.model('Person', personSchema)
+module.exports.Person = mongoose.model('Person', personSchema)

@@ -1,24 +1,17 @@
-doctype html
-html
-    include ./head.pug 
-    
-    body
-        form(action = "/person", method = "POST")
-            label(for="name") Name:
-            br
-            input(type="text" id = "name" name="name")
-            br
 
-            label(for="age") Age:
-            br
-            input(type="number" id="age" name="age")
-            br
+form(action = "/person", method = "POST")
 
-            label(for="nationality") Nationality:
-            br
-            input(type="text" id="nationality" name="nationality")
-            br
+    label(for="name") Name:
+    input(type="text" id = "name" name="name")
 
-            button(type="submit") Create new person 
 
-    include ./footer.pug
+    label(for="age") Age:
+    input(type="number" id="age" name="age")
+
+
+    label(for="fav_food") Favorite Foods:
+    input(type="text" id="fav_food" name="fav_food")
+
+    br
+    button(type="submit" class="button-primary") Create new person 
+

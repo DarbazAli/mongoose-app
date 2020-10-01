@@ -5,16 +5,13 @@ const log = console.log
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const Person = require('./Schema').Person
+require('dotenv').config()
 
 const app = express()
-
-app.listen(3000, () => console.log('Listening on 3000'))
-
-// establish a connection to local mongodb database
-// mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true});
-const mongoUri = 'mongodb://localhost:27017/test'
-mongoose.connect(mongoUri, { useUnifiedTopology: true, useNewUrlParser: true })
+const { MONGO_URI } = process.env
+const PORT = process.env.PROT || 3000
+app.listen(PORT, () => log('Listening on ' + PORT))
 
 // setup template engine
 app.set('views', './views')
@@ -23,78 +20,35 @@ app.set('view engine', 'pug')
 // serve static files
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+/*==========================================
+    2) CONNECT TO DB
+==============================================*/
+
+mongoose
+    .connect(MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(log('Conected to database'))
 
 // create the home url
 app.get('/', (req, res) => {
     res.render('index', { title: 'Home', message: 'Hello There' })
 })
 
-app.get('/about', (req, res) => {
-    res.render('about')
-})
+app.route('/person').post((req, res) => {
+    const { name, age, fav_food } = req.body
 
-// seup a rout for person
-app.get('/person', (req, res) => {
-    res.render('person')
-})
-
-// create a collection with Schema
-const personSchema = new Schema({
-    name: String,
-    age: Number,
-    nationality: String,
-})
-
-// create a model from this schema
-const Person = mongoose.model('Person', personSchema)
-
-/*=========================
-    CRUD - Create
-=========================*/
-const createAndSavePerson = (done) => {
-    const jonDoe = new Person({ name: 'Jon Doe', age: 30, nationality: 'US' })
-    jonDoe.save((err, data) => {
-        if (err) done(err)
-        done(null, data)
+    const newPerson = new Person({
+        name: name,
+        age: age,
+        favFoods: fav_food,
     })
-}
 
-// setup a post route handler to handle post requests to /person
-app.post('/person', (req, res) => {
-    let person = req.body
-
-    // check if all of the filds are provied
-    if (!person.name || !person.age || !person.nationality) {
-        // res.send("Sorry, you provided wrong info")
-        res.render('show_msg', {
-            message: 'Sorry, you provided wrong data',
-            type: 'error',
-        })
-    } else {
-        let newPerson = new Person({
-            name: person.name,
-            age: person.age,
-            nationality: person.nationality,
-        })
-
-        newPerson.save((err, data) => {
-            if (err)
-                res.render('show_msg', {
-                    message: 'Database Error',
-                    type: 'error',
-                })
-            else
-                res.render('show_msg', {
-                    message: 'New person added',
-                    person: data,
-                })
-        })
-    }
-})
-
-app.get('/people', (req, res) => {
-    Person.find((err, response) => {
-        // res.json(response);
-        res.render('people', { people: response })
-    })
+    newPerson
+        .save(newPerson)
+        .then((data) => res.json(data))
+        .catch((err) => log(err))
 })
