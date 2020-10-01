@@ -2,15 +2,17 @@
 console.clear()
 const log = console.log
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const Person = require('./Schema').Person
-require('dotenv').config()
+import express from 'express'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import Person from './Schema.js'
+import { config } from 'dotenv'
+
+config()
 
 const app = express()
-const { MONGO_URI } = process.env
-const PORT = process.env.PROT || 3000
+const { MONGO_URI, PORT } = process.env
+
 app.listen(PORT, () => log('Listening on ' + PORT))
 
 // setup template engine
@@ -18,7 +20,7 @@ app.set('views', './views')
 app.set('view engine', 'pug')
 
 // serve static files
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(process.cwd() + '/public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 

@@ -12,7 +12,7 @@
 */
 
 // We need 2 main packages for this stack
-const mongoose = require('mongoose') // to enteract with database
+import mongoose from 'mongoose' // to enteract with database
 const Schema = mongoose.Schema // to create Schemas for database documents
 
 /*==========================================
@@ -44,4 +44,5 @@ const personSchema = new Schema({
     favFoods: [String],
 })
 
-module.exports.Person = mongoose.model('Person', personSchema)
+const Person = mongoose.model('Person', personSchema)
+export default Person
